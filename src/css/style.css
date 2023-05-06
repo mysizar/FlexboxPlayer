@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.player-body {
+  width: 70%;
+  min-width: 400px;
+  max-width: 500px;
+  height: 90vh;
+  min-height: 670px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #e4e2e2;
+  box-shadow: 20px 20px 60px #c2c0c0, -20px -20px 60px #ffffff;
+}
+
+.player-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.fa-magnifying-glass,
+.fa-power-off {
+  font-size: 2rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: #e4e2e2;
+  box-shadow: inset 8px 8px 16px #c6c5c5, inset -8px -8px 16px #ffffff;
+}
+
+.fa-power-off {
+  color: red;
+}
+
+.player-album .image-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.player-album .image-section .fa-solid {
+  color: #4b4a4a;
+  font-size: 1.25rem;
+  padding: 0.7rem 0.5rem 0.5rem;
+  text-align: center;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  background: #e4e2e2;
+  transition: all 0.2s;
+  box-shadow: -8px 8px 16px #b9b7b7, 8px -8px 16px #ffffff;
+}
+
+.player-album .image-section .fa-shuffle:active {
+  box-shadow: 0px 0px 0px #b9b7b7, 0px 0px 0px #ffffff,
+    inset -4px 4px 8px #c6c5c5, inset 4px -4px 8px #ffffff;
+}
+
+.volume {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  width: min-content;
+  justify-content: space-between;
+  align-self: normal;
+}
+
+.volume input {
+  -webkit-appearance: slider-vertical;
+  width: 100%;
+  height: 80%;
+  margin: 1rem 0;
+  transition: all 0.5s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.volume input:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.player-album .image-shadow {
+  width: 75%;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  box-shadow: -0.4rem 0.4rem 0.5rem rgba(0, 0, 0, 0.4);
+}
+
+.player-album img {
+  width: 100%;
+  display: block;
+  border-radius: 50%;
+  border: 0.5rem solid white;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.player-album p + p {
+  text-align: center;
+  color: #7e7e7f;
+  font-weight: 900;
+  font-size: 1.5rem;
+  padding: 0.75rem;
+}
+
+.player-album p {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.75rem;
+  text-transform: capitalize;
+}
+
+/* .player-album .time-gradient {
+  display: block;
+  width: 70%;
+  height: 0.75rem;
+  background: linear-gradient(
+    to right,
+    #90ccf4,
+    #53a9e1,
+    #0a89d0,
+    #12bae2,
+    #00eeff
+  );
+} */
+
+.player-album .time-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0.75rem auto;
+}
+
+.player-album .positions-bar {
+  /* -webkit-appearance: none; */
+  width: 80%;
+  height: 0.75rem;
+  display: block;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid lightgray;
+}
+
+.control-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 1rem auto;
+}
+
+.control-buttons .fa-solid {
+  font-size: 3rem;
+  padding: 1rem;
+  width: 5rem;
+  text-align: center;
+  border-radius: 1.5rem;
+  color: #4b4a4a;
+  background: #e0e0e0;
+  box-shadow: -12px 12px 24px #cacaca, 12px -12px 24px #f6f6f6,
+    inset 0px 0px 0px #d0d0d0, inset 0px 0px 0px #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.control-buttons .fa-play,
+.control-buttons .fa-pause {
+  color: #19e3f2;
+}
+
+.control-buttons .fa-solid:active {
+  box-shadow: 0px 0px 0px #cacaca, 0px 0px 0px #f6f6f6,
+    inset -6px 6px 12px #d0d0d0, inset 6px -6px 12px #f0f0f0;
+  padding: 1.25rem 1rem 0.75rem;
+}
+
+.speaker {
+  width: 50%;
+  height: 0.5rem;
+  margin: 1rem auto;
+  border-radius: 0.25rem;
+  box-shadow: inset -2px 2px 4px rgba(0, 0, 0, 0.5);
+}
