@@ -39,7 +39,7 @@ body {
 }
 
 .fa-magnifying-glass,
-.fa-power-off {
+.fa-folder-open {
   font-size: 2rem;
   padding: 1.5rem;
   border-radius: 0.5rem;
@@ -47,8 +47,13 @@ body {
   box-shadow: inset 8px 8px 16px #c6c5c5, inset -8px -8px 16px #ffffff;
 }
 
-.fa-power-off {
-  color: red;
+.fa-folder-open {
+  color: #4b4a4a;
+  /* font-weight: 300; */
+}
+
+input[type="file"] {
+  display: none;
 }
 
 .player-album .image-section {

@@ -16,7 +16,16 @@
       <div class="player-head">
         <i title="Work in Process" class="fa-solid fa-magnifying-glass"></i>
         <p title="Work in Process">My Playlist</p>
-        <i title="Work in Process" class="fa-solid fa-power-off"></i>
+        <label>
+          <input
+            id="localAudio"
+            onchange="localFiles()"
+            type="file"
+            accept="audio/*"
+            multiple
+          />
+          <i title="Work in Process" class="fa-solid fa-folder-open"></i>
+        </label>
       </div>
       <div class="player-album">
         <div class="image-section">

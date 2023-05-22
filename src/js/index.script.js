@@ -103,6 +103,22 @@ function playRandom() {
   }
 }
 
+function localFiles() {
+  let files = document.getElementById("localAudio").files;
+  let localFilesSourceList = [];
+  let localFilesNameList = [];
+
+  for (let i = 0; i < files.length; i++) {
+    audioList.push(URL.createObjectURL(files[i]));
+    // localFilesSourceList[i] = URL.createObjectURL(files[i]);
+    // localFilesNameList[i] = files[i].name;
+  }
+
+  // console.log(files);
+  // console.log(localFilesNameList);
+  // console.log(localFilesSourceList);
+}
+
 function setPosition(currentPosition) {
   audio.currentTime = currentPosition;
 }
