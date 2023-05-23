@@ -1,22 +1,61 @@
 let audioList = [
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    author: "",
+    name: "",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+  },
+  {
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+  },
 ];
+
+createAudioNameFromURL();
+console.log(audioList);
 
 let currentSong = 0;
 let lastPlayedSong = [];
@@ -26,7 +65,7 @@ let audio = new Audio();
 // let muted = false;
 audio.volume = 0.25;
 audio.type = "audio/mpeg";
-audio.src = audioList[currentSong];
+audio.src = audioList[currentSong].src;
 
 function startPlay() {
   if (!audio.paused) {
@@ -36,7 +75,7 @@ function startPlay() {
   } else {
     audio.play();
     setIconPause();
-    audioName();
+    audioNameOutput();
     rotateImg();
   }
 }
@@ -57,12 +96,12 @@ function playNext() {
   if (currentSong == audioList.length) {
     currentSong = 0;
     stopRotateImg();
-    audio.src = audioList[currentSong];
+    audio.src = audioList[currentSong].src;
     startPlay();
     setTimeout(goRotateImg, 200);
   } else {
     stopRotateImg();
-    audio.src = audioList[currentSong];
+    audio.src = audioList[currentSong].src;
     startPlay();
     setTimeout(goRotateImg, 200);
   }
@@ -82,12 +121,12 @@ function playPrevious() {
   if (currentSong < 0) {
     currentSong = audioList.length - 1;
     stopRotateImg();
-    audio.src = audioList[currentSong];
+    audio.src = audioList[currentSong].src;
     startPlay();
     setTimeout(goRotateImg, 200);
   } else {
     stopRotateImg();
-    audio.src = audioList[currentSong];
+    audio.src = audioList[currentSong].src;
     startPlay();
     setTimeout(goRotateImg, 200);
   }
@@ -105,18 +144,19 @@ function playRandom() {
 
 function localFiles() {
   let files = document.getElementById("localAudio").files;
-  let localFilesSourceList = [];
-  let localFilesNameList = [];
 
   for (let i = 0; i < files.length; i++) {
-    audioList.push(URL.createObjectURL(files[i]));
-    // localFilesSourceList[i] = URL.createObjectURL(files[i]);
-    // localFilesNameList[i] = files[i].name;
+    let obj = {};
+    obj.src = URL.createObjectURL(files[i]);
+    obj.name = files[i].name
+      .substring(files[i].name.indexOf("-") + 1) // find first '-' and delete all before
+      .slice(0, -4); // delete file-type '.mp3' from name
+    obj.author = files[i].name.slice(0, files[i].name.indexOf("-")); // find first '-' and delete all after
+
+    audioList.push(obj);
   }
 
-  // console.log(files);
-  // console.log(localFilesNameList);
-  // console.log(localFilesSourceList);
+  console.log(audioList);
 }
 
 function setPosition(currentPosition) {
@@ -144,21 +184,28 @@ function format(s) {
   return m + ":" + s;
 }
 
-function audioName() {
-  let url = audio.src;
-  if (url.indexOf("?") != -1) {
-    url = url.slice(0, url.indexOf("?")); // if '?' exist => delete it and all after
+function createAudioNameFromURL() {
+  for (let i = 0; i < audioList.length; i++) {
+    let url = audioList[i].src;
+
+    if (url.indexOf("?") != -1) {
+      url = url.slice(0, url.indexOf("?")); // if '?' exist => delete it and all after
+    }
+
+    let filename = url.substring(url.lastIndexOf("/") + 1); // find last '/' and delete all before
+    filename = filename.replace(/_/g, " "); // replace all '_'-symbol to 'space'
+
+    audioList[i].name = filename
+      .substring(filename.indexOf("-") + 1) // find first '-' and delete all before
+      .slice(0, -4); // then delete file-type '.mp3' from name
+
+    audioList[i].author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
   }
+}
 
-  let filename = url.substring(url.lastIndexOf("/") + 1); // find last '/' and delete all before
-  filename = filename.replace(/_/g, " "); // replace all '_'-symbol to 'space'
-
-  let name = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
-  name = name.slice(0, -4); // delete file-type '.mp3' from name
-  document.getElementById("audioName").innerHTML = name;
-
-  let author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
-  document.getElementById("author").innerHTML = author;
+function audioNameOutput() {
+  document.getElementById("audioName").innerHTML = audioList[currentSong].name;
+  document.getElementById("author").innerHTML = audioList[currentSong].author;
 }
 
 function rotateImg() {
