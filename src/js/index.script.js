@@ -44,18 +44,12 @@ function playNext() {
     currentSong++;
   }
 
-  if (currentSong == audioList.length) {
-    currentSong = 0;
-    stopRotateImg();
-    audio.src = audioList[currentSong].src;
-    startPlay();
-    setTimeout(goRotateImg, 200);
-  } else {
-    stopRotateImg();
-    audio.src = audioList[currentSong].src;
-    startPlay();
-    setTimeout(goRotateImg, 200);
-  }
+  if (currentSong == audioList.length) currentSong = 0;
+
+  stopRotateImg();
+  audio.src = audioList[currentSong].src;
+  startPlay();
+  setTimeout(goRotateImg, 200);
 }
 
 function playPrevious() {
@@ -69,18 +63,12 @@ function playPrevious() {
     currentSong--;
   }
 
-  if (currentSong < 0) {
-    currentSong = audioList.length - 1;
-    stopRotateImg();
-    audio.src = audioList[currentSong].src;
-    startPlay();
-    setTimeout(goRotateImg, 200);
-  } else {
-    stopRotateImg();
-    audio.src = audioList[currentSong].src;
-    startPlay();
-    setTimeout(goRotateImg, 200);
-  }
+  if (currentSong < 0) currentSong = audioList.length - 1;
+
+  stopRotateImg();
+  audio.src = audioList[currentSong].src;
+  startPlay();
+  setTimeout(goRotateImg, 200);
 }
 
 function playRandom() {
@@ -119,16 +107,15 @@ function getSrcFromFile() {
         let obj = {};
         obj.src = arr[i];
         audioList.push(obj);
-        createAudioNameFromURL();
+        createAudioNameFromURL(arr);
         audio.src = audioList[currentSong].src;
       }
       console.log(audioList);
     });
 }
 
-function createAudioNameFromURL() {
-  // for (let i = 0; i < audioList.length; i++) {
-  let url = audioList[i].src;
+function createAudioNameFromURL(arr) {
+  let url = arr[i];
 
   if (url.indexOf("?") != -1) {
     url = url.slice(0, url.indexOf("?")); // if '?' exist => delete it and all after
@@ -137,10 +124,20 @@ function createAudioNameFromURL() {
   let filename = url.substring(url.lastIndexOf("/") + 1); // find last '/' and delete all before
   filename = filename.replace(/_/g, " ").slice(0, -4); // replace all '_'-symbol to 'space' and then delete file-type '.mp3' from name
 
-  audioList[i].name = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
+  let n, a;
 
-  audioList[i].author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
-  // }
+  audioList[i].name = n = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
+
+  audioList[i].author = a = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
+
+  createPlaylist(a, n);
+}
+
+function createPlaylist(author, name) {
+  let el = document.createElement("li");
+  let text = document.createTextNode(author + " - " + name);
+  el.appendChild(text);
+  document.getElementById("playlist").appendChild(el);
 }
 
 function setPosition(currentPosition) {
@@ -175,7 +172,7 @@ function audioNameOutput() {
 
 function rotateImg() {
   document.getElementById("img").style.animation =
-    "rotate 10s linear 0s running " + audio.duration / 10;
+    "rotate 10s linear 0s running " + Math.ceil(audio.duration / 10);
 }
 
 function stopRotateImg() {
@@ -183,7 +180,13 @@ function stopRotateImg() {
 }
 
 function goRotateImg() {
-  document.getElementById("img").style.animationPlayState = "running";
+  let img = document.getElementById("img").style;
+  if (img.animationName === "") {
+    rotateImg();
+  } else {
+    img.animationIterationCount = Math.ceil(audio.duration / 10);
+    img.animationPlayState = "running";
+  }
 }
 
 function setIconPlay() {
