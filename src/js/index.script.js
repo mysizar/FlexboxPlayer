@@ -99,10 +99,9 @@ function localFiles() {
   for (let i = 0; i < files.length; i++) {
     let obj = {};
     obj.src = URL.createObjectURL(files[i]);
-    obj.name = files[i].name
-      .substring(files[i].name.indexOf("-") + 1) // find first '-' and delete all before
-      .slice(0, -4); // delete file-type '.mp3' from name
-    obj.author = files[i].name.slice(0, files[i].name.indexOf("-")); // find first '-' and delete all after
+    let filename = files[i].name.replace(/_/g, " ").slice(0, -4); // replace all '_'-symbol to 'space' and delete file-type '.mp3' from name
+    obj.name = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
+    obj.author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
 
     audioList.push(obj);
   }
@@ -136,11 +135,9 @@ function createAudioNameFromURL() {
   }
 
   let filename = url.substring(url.lastIndexOf("/") + 1); // find last '/' and delete all before
-  filename = filename.replace(/_/g, " "); // replace all '_'-symbol to 'space'
+  filename = filename.replace(/_/g, " ").slice(0, -4); // replace all '_'-symbol to 'space' and then delete file-type '.mp3' from name
 
-  audioList[i].name = filename
-    .substring(filename.indexOf("-") + 1) // find first '-' and delete all before
-    .slice(0, -4); // then delete file-type '.mp3' from name
+  audioList[i].name = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
 
   audioList[i].author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
   // }
