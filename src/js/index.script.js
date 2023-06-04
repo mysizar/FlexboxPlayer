@@ -88,10 +88,12 @@ function localFiles() {
     let obj = {};
     obj.src = URL.createObjectURL(files[i]);
     let filename = files[i].name.replace(/_/g, " ").slice(0, -4); // replace all '_'-symbol to 'space' and delete file-type '.mp3' from name
-    obj.name = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
-    obj.author = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
+    let n, a;
+    obj.name = n = filename.substring(filename.indexOf("-") + 1); // find first '-' and delete all before
+    obj.author = a = filename.slice(0, filename.indexOf("-")); // find first '-' and delete all after
 
     audioList.push(obj);
+    createPlaylist(a, n);
   }
 
   console.log(audioList);
@@ -117,7 +119,7 @@ function getSrcFromFile() {
 function createAudioNameFromURL(arr) {
   let url = arr[i];
 
-  if (url.indexOf("?") != -1) {
+  if (url.indexOf("?") !== -1) {
     url = url.slice(0, url.indexOf("?")); // if '?' exist => delete it and all after
   }
 
